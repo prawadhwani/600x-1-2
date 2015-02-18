@@ -1,4 +1,4 @@
-balance = 4773
+balance = 320000
 annualInterestRate = 0.2
 
 min_monthly_payment = 0
