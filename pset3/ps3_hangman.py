@@ -44,7 +44,7 @@ def chooseWord(wordlist):
 
 # Load the list of words into the variable wordlist
 # so that it can be accessed from anywhere in the program
-#wordlist = loadWords()
+wordlist = loadWords()
 
 def isWordGuessed(secretWord, lettersGuessed):
     '''
@@ -84,8 +84,11 @@ def getAvailableLetters(lettersGuessed):
       yet been guessed.
     '''
     # FILL IN YOUR CODE HERE...
-    
-    
+    letters = string.ascii_lowercase
+    for char in lettersGuessed:
+        letters = letters.replace(char, "")
+    return letters
+
 
 def hangman(secretWord):
     '''
@@ -108,10 +111,23 @@ def hangman(secretWord):
     Follows the other limitations detailed in the problem write-up.
     '''
     # FILL IN YOUR CODE HERE...
-
-
-
-
+    print('I am thinking of a word that is' + str(len(secretWord)) +' letters long')
+    guess = False
+    guessNumber = 8
+    lettersGuessed = []
+    while(not guess or guessNumber>0):
+        print('-----------')
+        print('You have '+str(guessNumber)+' guesses left')
+        print('Available Letters: ' + getAvailableLetters(lettersGuessed))
+        letterInput = raw_input('Please guess a letter ')
+        if(letterInput not in lettersGuessed):
+            lettersGuessed += letterInput
+        else:
+            print('Oops! You\'ve already guessed that letter:' + str(getGuessedWord(secretWord, lettersGuessed)))
+        if (isWordGuessed(secretWord, lettersGuessed)):
+            print('Good Guess '+ str(getGuessedWord(secretWord, lettersGuessed)))
+        else:
+            print('Oops! That letter is not in my word:' + str(getGuessedWord(secretWord, lettersGuessed)))
 
 
 # When you've completed your hangman function, uncomment these two lines
