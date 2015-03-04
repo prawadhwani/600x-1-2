@@ -78,16 +78,14 @@ def getWordScore(word, n):
     """
     score = 0
     for char in word:
-        for key in SCRABBLE_LETTER_VALUES:
-            for value in SCRABBLE_LETTER_VALUES[char]:
-                score += value
+        score += SCRABBLE_LETTER_VALUES[char]
+
+    score *= len(word)
 
     if(len(word) == n):
-        score += 0
+        score += 50
 
     return score
-
-print getWordScore('test', 8)
 
 #
 # Problem #2: Make sure you understand how this function works and what it does!
