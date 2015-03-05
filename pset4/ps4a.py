@@ -155,8 +155,10 @@ def updateHand(hand, word):
     returns: dictionary (string -> int)
     """
     # TO DO ... <-- Remove this comment when you code this function
-
-
+    handCopy = hand.copy()
+    for char in word:
+        handCopy[char] = handCopy.get(char, 0) - 1
+    return handCopy
 
 #
 # Problem #3: Test word validity
@@ -172,9 +174,15 @@ def isValidWord(word, hand, wordList):
     hand: dictionary (string -> int)
     wordList: list of lowercase strings
     """
-    # TO DO ... <-- Remove this comment when you code this function
+    flag = False
+    if (word in wordList):
+        flag = True
+    for char in word:
+        if char not in hand:
+            flag = False
+    return flag
 
-
+print isValidWord('even', {'i': 1, 'n': 1, 'e': 1, 'l': 2, 'v': 2}, loadWords())
 #
 # Problem #4: Playing a hand
 #
