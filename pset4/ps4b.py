@@ -45,8 +45,6 @@ def compChooseWord(hand, wordList, n):
         return None
     return bestWord
 
-wordList = loadWords()
-print compChooseWord({'q': 2, 'x': 2, 'z': 2, 't': 2, 'n': 2}, wordList, 10)
 #
 # Problem #7: Computer plays a hand
 #
@@ -69,8 +67,24 @@ def compPlayHand(hand, wordList, n):
     wordList: list (string)
     n: integer (HAND_SIZE; i.e., hand size required for additional points)
     """
-    # TO DO ... <-- Remove this comment when you code this function
-    
+    totalScore = 0
+    handLength = calculateHandlen(hand)
+    while(handLength > 0):
+        print('Current hand: '),
+        displayHand(hand)
+        word = compChooseWord(hand, wordList, n)
+        if not (word is None):
+            score = getWordScore(word, n)
+            totalScore += score
+            print('"'+ str(word) +'"'+' earned '+str(score)+' points.'+ ' Total: '+ str(totalScore)+' points.')
+            hand = updateHand(hand, word)
+            handLength = calculateHandlen(hand)
+        else:
+            handLength = 0
+    print('Total score: '+str(totalScore))
+
+wordList = loadWords()
+compPlayHand({'a': 2, 'c': 1, 'b': 1, 't': 1}, wordList, 5)
 #
 # Problem #8: Playing a game
 #
