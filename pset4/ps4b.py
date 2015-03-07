@@ -23,26 +23,30 @@ def compChooseWord(hand, wordList, n):
 
     returns: string or None
     """
-    # BEGIN PSEUDOCODE <-- Remove this comment when you code this function; do your coding within the pseudocode (leaving those comments in-place!)
     # Create a new variable to store the maximum score seen so far (initially 0)
-
+    maxScore = 0
     # Create a new variable to store the best word seen so far (initially None)  
-
+    bestWord = ''
     # For each word in the wordList
-
+    for word in wordList:
         # If you can construct the word from your hand
         # (hint: you can use isValidWord, or - since you don't really need to test if the word is in the wordList - you can make a similar function that omits that test)
-
+        if(isValidWord(word, hand, wordList)):
             # Find out how much making that word is worth
-
+            wordScore = getWordScore(word, n)
             # If the score for that word is higher than your best score
-
+            if (maxScore < wordScore):
                 # Update your best score, and best word accordingly
-
+                maxScore = wordScore
+                bestWord = word
 
     # return the best word you found.
+    if(bestWord == ''):
+        return None
+    return bestWord
 
-
+wordList = loadWords()
+print compChooseWord({'q': 2, 'x': 2, 'z': 2, 't': 2, 'n': 2}, wordList, 10)
 #
 # Problem #7: Computer plays a hand
 #
