@@ -83,8 +83,6 @@ def compPlayHand(hand, wordList, n):
             handLength = 0
     print('Total score: '+str(totalScore))
 
-wordList = loadWords()
-compPlayHand({'a': 2, 'c': 1, 'b': 1, 't': 1}, wordList, 5)
 #
 # Problem #8: Playing a game
 #
@@ -113,9 +111,45 @@ def playGame(wordList):
 
     wordList: list (string)
     """
-    # TO DO... <-- Remove this comment when you code this function
-    print "playGame not yet implemented." # <-- Remove this when you code this function
-
+    exit = False
+    oldHand = {}
+    while not exit:
+        choice = raw_input('Enter n to deal a new hand, r to replay the last hand, or e to end game: ')
+        if(choice == 'e'):
+            exit = True
+        elif(choice == 'r'):
+            if(not oldHand):
+                print('You have not played a hand yet. Please play a new hand first!')
+            else:
+                correctChoice = False
+                while not correctChoice:
+                    playChoice = raw_input('Enter u to have yourself play, c to have the computer play: ')
+                    if(playChoice == 'u'):
+                        correctChoice = True
+                        playHand(oldHand, wordList, HAND_SIZE)
+                    elif(playChoice == 'c'):
+                        correctChoice = True
+                        compPlayHand(oldHand, wordList, HAND_SIZE)
+                    else:
+                        print('Invalid command.')
+        elif(choice == 'n'):
+            correctChoice = False
+            while not correctChoice:
+                playChoice = raw_input('Enter u to have yourself play, c to have the computer play: ')
+                if(playChoice == 'u'):
+                    correctChoice = True
+                    newHand = dealHand(HAND_SIZE)
+                    oldHand = newHand
+                    playHand(newHand, wordList, HAND_SIZE)
+                elif(playChoice == 'c'):
+                    correctChoice = True
+                    newHand = dealHand(HAND_SIZE)
+                    oldHand = newHand
+                    compPlayHand(newHand, wordList, HAND_SIZE)
+                else:
+                    print('Invalid command.')
+        else:
+            print('Invalid command.')
         
 #
 # Build data structures used for entire session and play game
