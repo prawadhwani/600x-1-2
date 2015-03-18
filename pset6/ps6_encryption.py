@@ -100,7 +100,15 @@ def buildCoder(shift):
     returns: dict
     """
     ### TODO.
-    return "Not yet implemented." # Remove this comment when you code the function
+    coder = {}
+    letters = string.ascii_lowercase + string.ascii_uppercase
+    
+    for char in letters:
+        coder[char] = coder[char+shift]
+
+    return coder
+
+print buildCoder(3)
 
 def applyCoder(text, coder):
     """
