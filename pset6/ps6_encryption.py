@@ -100,6 +100,7 @@ def buildCoder(shift):
     returns: dict
     """
     coder = {}
+
     lower_case = string.ascii_lowercase
     upper_case = string.ascii_uppercase
     
@@ -110,6 +111,7 @@ def buildCoder(shift):
         coder[char] = upper_case[(i + shift) % len(upper_case)]
 
     return coder
+
 
 def applyCoder(text, coder):
     """
@@ -140,7 +142,8 @@ def applyShift(text, shift):
     """
     ### TODO.
     ### HINT: This is a wrapper function.
-    return "Not yet implemented." # Remove this comment when you code the function
+    coder = buildCoder(shift)
+    return applyCoder(text, coder)
 
 #
 # Problem 2: Decryption
