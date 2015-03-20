@@ -155,8 +155,30 @@ def findBestShift(wordList, text):
     text: string
     returns: 0 <= int < 26
     """
-    ### TODO
-    return "Not yet implemented." # Remove this comment when you code the function
+    #set the maximum number of real words to zero
+    real_words = 0
+    #set the best shift to zero
+    best_shift = 0
+    #for all possible shits form 0 to 26
+    for i in range(26):
+        #shift the entire text by i
+        shifted_text = applyShift(text, i)
+        #split the text into a list of individual words
+        shifted_list = shifted_text.split(' ')
+        #valid words in the current list
+        valid_words = 0
+        #count the number of valid words in the list
+        for word in shifted_list:
+            if(isWord(wordList, word)):
+                valid_words += 1
+        #if the number of valid words is more than the real words
+        if valid_words > real_words:
+            #record the number of valid words
+            real_words = valid_words
+            #set the best shift to current shift
+            best_shift = i
+    return best_shift
+
 
 def decryptStory():
     """
@@ -167,8 +189,11 @@ def decryptStory():
 
     returns: string - story in plain text
     """
-    ### TODO.
-    return "Not yet implemented." # Remove this comment when you code the function
+    story = getStoryString()
+    wordList = loadWords()
+    story_key = findBestShift(wordList, story)
+    return applyShift(story, story_key)
+
 
 #
 # Build data structures used for entire session and run encryption
@@ -176,9 +201,10 @@ def decryptStory():
 
 if __name__ == '__main__':
     # To test findBestShift:
-    wordList = loadWords()
-    s = applyShift('Hello, world!', 8)
-    bestShift = findBestShift(wordList, s)
-    assert applyShift(s, bestShift) == 'Hello, world!'
+    # wordList = loadWords()
+    # s = applyShift('Hello, world!', 8)
+    # bestShift = findBestShift(wordList, s)
+    # assert applyShift(s, bestShift) == 'Hello, world!'
+    
     # To test decryptStory, comment the above four lines and uncomment this line:
-    #    decryptStory()
+    print decryptStory()
