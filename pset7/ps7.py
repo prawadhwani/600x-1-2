@@ -108,11 +108,8 @@ class WordTrigger(Trigger):
 class TitleTrigger(WordTrigger):
     def __init__(self, word):
         self.word = word
-    def evaluate(self, story):
-        wordTrigger = WordTrigger(self.word)
-        story = NewsStory()
-        title = story.getTitle()
-        return wordTrigger.isWordIn(title)
+    def evaluate(self, storyObject):
+        return self.isWordIn(storyObject.getTitle())
 
 # TODO: SubjectTrigger
 class SubjectTrigger(WordTrigger):
