@@ -91,33 +91,37 @@ class WordTrigger(Trigger):
         self.word = word
 
     def isWordIn(self, text):
-        for _word in text:
-            cleanWord = self.removePunc(_word)
-            if (self.word == cleanWord):
+        clean_text = self.removePunc(text)
+        word_list = clean_text.split(' ')
+        for _word in word_list:
+            if(self.word.lower() == _word):
                 return True
         return False
-
-    def removePunc(self, word):
-        for char in word:
+                
+    def removePunc(self, text):
+        """
+        Helper to remove all punctuations from the text.
+        Returns the lowercase text.
+        """
+        for char in text:
             if (char in string.punctuation):
-                word.replace(char, ' ')
-        return word
-
+                text = text.replace(char, ' ')
+        return text.lower()
 
 # TODO: TitleTrigger
 class TitleTrigger(WordTrigger):
-    def __init__(self, word):
-        self.word = word
     def evaluate(self, storyObject):
         return self.isWordIn(storyObject.getTitle())
 
 # TODO: SubjectTrigger
 class SubjectTrigger(WordTrigger):
-    pass
+    def evaluate(self, storyObject):
+        return self.isWordIn(storyObject.getSubject())
 
 # TODO: SummaryTrigger
 class SummaryTrigger(WordTrigger):
-    pass
+    def evaluate(self, storyObject):
+        return self.isWordIn(storyObject.getSummary())
 
 # Composite Triggers
 # Problems 6-8
