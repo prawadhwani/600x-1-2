@@ -85,6 +85,7 @@ class Trigger(object):
 
 # Whole Word Triggers
 # Problems 2-5
+
 # TODO: WordTrigger
 class WordTrigger(Trigger):
     def __init__(self, word):
@@ -127,9 +128,30 @@ class SummaryTrigger(WordTrigger):
 # Problems 6-8
 
 # TODO: NotTrigger
-# TODO: AndTrigger
-# TODO: OrTrigger
+class NotTrigger(Trigger):
+    def __init__(self, triggerObject):
+        self.triggerObject = triggerObject
 
+    def evaluate(self, storyObject):
+        return not self.triggerObject.evaluate(storyObject)
+
+# TODO: AndTrigger
+class AndTrigger(Trigger):
+    def __init__(self, triggerObject1, triggerObject2):
+        self.triggerObject1 = triggerObject1
+        self.triggerObject2 = triggerObject2
+
+    def evaluate(self, storyObject):
+        return self.triggerObject1.evaluate(storyObject) and self.triggerObject2.evaluate(storyObject)
+
+# TODO: OrTrigger
+class OrTrigger(Trigger):
+    def __init__(self, triggerObject1, triggerObject2):
+        self.triggerObject1 = triggerObject1
+        self.triggerObject2 = triggerObject2
+
+    def evaluate(self, storyObject):
+        return self.triggerObject1.evaluate(storyObject) or self.triggerObject2.evaluate(storyObject)
 
 # Phrase Trigger
 # Question 9
