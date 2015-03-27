@@ -288,8 +288,8 @@ def main_thread(master):
                 cont.insert(END, "\n*********************************************************************\n", "title")
                 guidShown.append(newstory.getGuid())
 
-        while True:
-
+        #while True:
+        def do_every_sleeptime(SLEEPTIME):
             print "Polling . . .",
             # Get stories from Google's Top Stories RSS news feed
             stories = process("http://news.google.com/?output=rss")
@@ -305,7 +305,10 @@ def main_thread(master):
 
 
             print "Sleeping..."
-            time.sleep(SLEEPTIME)
+            #time.sleep(SLEEPTIME)
+            master.after(SLEEPTIME*1000, do_every_sleeptime, SLEEPTIME)
+
+        do_every_sleeptime(SLEEPTIME)
 
     except Exception as e:
         print e
@@ -315,6 +318,7 @@ if __name__ == '__main__':
 
     root = Tk()
     root.title("Some RSS parser")
-    thread.start_new_thread(main_thread, (root,))
+    #thread.start_new_thread(main_thread, (root,))
+    main_thread(root)
     root.mainloop()
 
