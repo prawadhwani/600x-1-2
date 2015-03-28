@@ -4,17 +4,17 @@
 # Problem 11: 
 
 # subject trigger named t1
-t1 SUBJECT world
+t1 SUBJECT Yemen
 
 # title trigger named t2
-t2 TITLE Intel
+t2 TITLE yemen
 
 # phrase trigger named t3
-t3 PHRASE New York City
+t3 PHRASE Miami Tennis
 
 # composite trigger named t4
-t4 AND t2 t3
+t4 OR t2 t3
 
 # the trigger set contains t1 and t4
-ADD t1 t4
+ADD t1 t2
 

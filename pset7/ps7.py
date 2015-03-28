@@ -204,8 +204,28 @@ def makeTrigger(triggerMap, triggerType, params, name):
 
     Returns a new instance of a trigger (ex: TitleTrigger, AndTrigger).
     """
-    # TODO: Problem 11
+    if triggerType == 'TITLE':
+        triggerMap[name] = TitleTrigger(params[0])
+    
+    elif triggerType == 'SUBJECT':
+        triggerMap[name] = SubjectTrigger(params[0])
+    
+    elif triggerType == 'SUMMARY':
+        triggerMap[name] = SummaryTrigger(params[0])
+    
+    elif triggerType == 'NOT':
+        triggerMap[name] = NotTrigger(triggerMap[params[0]])
 
+    elif triggerType == 'AND':
+        triggerMap[name] = AndTrigger(triggerMap[params[0]], triggerMap[params[1]])
+
+    elif triggerType == 'OR':
+        triggerMap[name] = OrTrigger(triggerMap[params[0]], triggerMap[params[1]])
+
+    elif triggerType == 'PHRASE':
+        triggerMap[name] = PhraseTrigger(' '.join(params))
+
+    return triggerMap[name]
 
 def readTriggerConfig(filename):
     """
@@ -256,7 +276,7 @@ def main_thread(master):
     # this with something more configurable in Problem 11
     try:
         # These will probably generate a few hits...
-        t1 = TitleTrigger("Obama")
+        t1 = TitleTrigger("Yemen")
         t2 = SubjectTrigger("Romney")
         t3 = PhraseTrigger("Election")
         t4 = OrTrigger(t2, t3)
@@ -264,7 +284,7 @@ def main_thread(master):
         
         # TODO: Problem 11
         # After implementing makeTrigger, uncomment the line below:
-        # triggerlist = readTriggerConfig("triggers.txt")
+        triggerlist = readTriggerConfig("triggers.txt")
 
         # **** from here down is about drawing ****
         frame = Frame(master)
@@ -293,8 +313,8 @@ def main_thread(master):
                 cont.insert(END, "\n*********************************************************************\n", "title")
                 guidShown.append(newstory.getGuid())
 
-        #while True:
-        def do_every_sleeptime(SLEEPTIME):
+        while True:
+        #def do_every_sleeptime(SLEEPTIME):
             print "Polling . . .",
             # Get stories from Google's Top Stories RSS news feed
             stories = process("http://news.google.com/?output=rss")
@@ -310,10 +330,10 @@ def main_thread(master):
 
 
             print "Sleeping..."
-            #time.sleep(SLEEPTIME)
-            master.after(SLEEPTIME*1000, do_every_sleeptime, SLEEPTIME)
+            time.sleep(SLEEPTIME)
+            #master.after(SLEEPTIME*1000, do_every_sleeptime, SLEEPTIME)
 
-        do_every_sleeptime(SLEEPTIME)
+        #do_every_sleeptime(SLEEPTIME)
 
     except Exception as e:
         print e
@@ -323,7 +343,7 @@ if __name__ == '__main__':
 
     root = Tk()
     root.title("Some RSS parser")
-    #thread.start_new_thread(main_thread, (root,))
-    main_thread(root)
+    thread.start_new_thread(main_thread, (root,))
+    #main_thread(root)
     root.mainloop()
 
